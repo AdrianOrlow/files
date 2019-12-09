@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Colors from 'constants/Colors';
@@ -22,6 +23,12 @@ export const Icon = styled.span`
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  
+  & > svg {
+    height: 1rem;
+    width: 1rem;
+    color: ${Colors.GrayishBlue};
+  }
 `;
 
 export const Title = styled.h2`
@@ -50,6 +57,6 @@ export const InfoElement = styled.div`
   font-size: 1rem;
   border-radius: .5em;
   background: ${Colors.Fog};
-  color: ${Colors.GrayishBlue};
+  color: ${rgba(Colors.GrayishBlue, 0.75)};
   margin: 0;
 `;
