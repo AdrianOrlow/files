@@ -33,3 +33,8 @@ export const SectionListHorizontal = styled.div`
     }
   }
 `;
+
+export const SectionListVertical = styled.div`
+  display: grid;
+  grid-gap: 1rem;
+`;

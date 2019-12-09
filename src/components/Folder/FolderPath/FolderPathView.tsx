@@ -7,11 +7,11 @@ import {
 } from './FolderPathStyle';
 
 interface FolderPathProps {
-  path: FolderPathElement[];
+  data: FolderPathElement[];
 }
 
 const FolderPath: React.FC<FolderPathProps> = (props: FolderPathProps) => {
-  const { path } = props;
+  const { data } = props;
 
   const folderLinkWithArrow = (pathElement: FolderPathElement): React.ReactElement => (
     <span key={pathElement.id}>
@@ -23,7 +23,7 @@ const FolderPath: React.FC<FolderPathProps> = (props: FolderPathProps) => {
       <Arrow />
     </span>
   );
-  const pathReversed = R.reverse(path);
+  const pathReversed = R.reverse(data);
   const folderPath = R.map(folderLinkWithArrow, pathReversed);
 
   return (

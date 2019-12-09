@@ -6,19 +6,19 @@ import {
 } from './FolderLinkStyle';
 
 interface FolderLinkProps {
-  folderData: FolderType;
+  data: FolderType;
 }
 
 const FolderLink: React.FC<FolderLinkProps> = (props: FolderLinkProps) => {
-  const { folderData } = props;
+  const { data } = props;
 
   return (
-    <Folder to={`/folder/${folderData.id}`}>
+    <Folder to={`/folder/${data.id}`}>
       <Icon>
         <GrayFolderIcon />
       </Icon>
       <Title>
-        {folderData.title}
+        {data.title}
       </Title>
     </Folder>
   );

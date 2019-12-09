@@ -26,7 +26,7 @@ export const GrayFolderIcon = styled(FolderIcon)`
 export const Title = styled.p`
   font-size: 1rem;
   padding: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   color: ${Colors.GrayishBlue};
   background: ${Colors.Fog};
   margin: 0;
