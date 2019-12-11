@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 import { Link as RouterLink } from 'react-router-dom';
 
-import Colors from 'constants/Colors';
+import { Colors } from 'constants/index';
 
 export const File = styled(RouterLink)`
   display: grid;

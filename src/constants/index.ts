@@ -1,11 +1,12 @@
-import { ConstantsType } from './types';
-import Colors from './Colors';
 import Breakpoints from './Breakpoints';
+import Colors from './Colors';
+import Routes from './Routes';
 
-const Constants: ConstantsType = {
-  API_URL: 'https://localhost:8000/',
-  Colors,
+export * from './types';
+export {
   Breakpoints,
+  Colors,
+  Routes,
 };
 
-export default Constants;
+export const API_URL = 'https://localhost:8000/';

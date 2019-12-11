@@ -1,5 +1,7 @@
 import React from 'react';
 import { Folder as FolderType } from 'types';
+import { RouteTitle } from 'constants/index';
+import { getPath } from 'utils/index';
 
 import {
   Folder, Icon, GrayFolderIcon, Title,
@@ -11,9 +13,10 @@ interface FolderLinkProps {
 
 const FolderLink: React.FC<FolderLinkProps> = (props: FolderLinkProps) => {
   const { data } = props;
+  const folderPath = getPath({ id: data.id }, RouteTitle.Folder);
 
   return (
-    <Folder to={`/folder/${data.id}`}>
+    <Folder to={folderPath}>
       <Icon>
         <GrayFolderIcon />
       </Icon>

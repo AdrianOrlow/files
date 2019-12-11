@@ -28,7 +28,7 @@ const iconsMimeTypes: IconMimeTypes[] = [
       'image/png',
       'image/svg+xml',
       'image/gif',
-      'image/tiff'
+      'image/tiff',
     ],
   },
   {
@@ -101,7 +101,7 @@ const iconsMimeTypes: IconMimeTypes[] = [
   },
 ];
 
-export const findFileIcon = (fileName: string) => {
+export const findFileIcon = (fileName: string): StyledIcon => {
   const mimeType = mime.lookup(fileName);
   const hasMimeType = R.includes(mimeType);
   const foundMimeType = R.find<IconMimeTypes>(
@@ -109,3 +109,5 @@ export const findFileIcon = (fileName: string) => {
   )(iconsMimeTypes);
   return foundMimeType ? foundMimeType.icon : File;
 };
+
+export const parseDate = (date: string): string => new Date(date).toLocaleDateString();

@@ -1,4 +1,4 @@
-import API_URL from 'constants/index';
+import { API_URL } from 'constants/';
 
 export default {
   v1: {

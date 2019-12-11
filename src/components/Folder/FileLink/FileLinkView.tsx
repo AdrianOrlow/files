@@ -1,10 +1,10 @@
 import React from 'react';
-import { File as FileType } from 'types';
+import {File as FileType} from 'types';
+import {RouteTitle} from 'constants/index';
+import {getPath} from 'utils/index';
 
-import {
-  File, Header, Icon, Title, Info, InfoElement,
-} from './FileLinkStyle';
-import { findFileIcon } from './FileLinkUtils';
+import {File, Header, Icon, Info, InfoElement, Title,} from './FileLinkStyle';
+import {findFileIcon, parseDate} from './FileLinkUtils';
 
 interface FileLinkProps {
   data: FileType;
@@ -13,9 +13,10 @@ interface FileLinkProps {
 const FileLink: React.FC<FileLinkProps> = (props: FileLinkProps) => {
   const { data } = props;
   const FileIcon = findFileIcon(data.fileName);
+  const filePath = getPath({ id: data.id }, RouteTitle.File);
 
   return (
-    <File to={`/files/${data.id}`}>
+    <File to={filePath}>
       <Header>
         <Icon>
           <FileIcon />
@@ -25,11 +26,20 @@ const FileLink: React.FC<FileLinkProps> = (props: FileLinkProps) => {
         </Title>
       </Header>
       <Info>
-        <InfoElement>2019-11-11</InfoElement>
+        <FileLinkDate date={data.updatedAt} />
         <InfoElement>200 KB</InfoElement>
       </Info>
     </File>
   );
+};
+
+interface FileLinkDateProps {
+  date: string;
+}
+
+const FileLinkDate = (props: FileLinkDateProps): React.ReactElement => {
+  const { date } = props;
+  return <InfoElement>{parseDate(date)}</InfoElement>;
 };
 
 export default FileLink;

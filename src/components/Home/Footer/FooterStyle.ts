@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Breakpoints from 'constants/Breakpoints';
-import Colors from 'constants/Colors';
+import { Colors, Breakpoints } from 'constants/index';
 import { Button as SharedButton } from 'shared/ButtonStyle';
 
 export const Footer = styled.footer`

@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 import { Button as SharedButton } from 'shared/ButtonStyle';
-import Colors from 'constants/Colors';
-import Breakpoints from 'constants/Breakpoints';
+import { Colors, Breakpoints } from 'constants/index';
 
 export const Section = styled.section`
   height: 80vh;

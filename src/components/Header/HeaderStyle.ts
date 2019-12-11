@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Breakpoints from 'constants/Breakpoints';
-import Colors from 'constants/Colors';
+import { Colors, Breakpoints } from 'constants/index';
 
 export const Header = styled.header`
   display: flex;

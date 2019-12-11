@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Folder as FolderIcon } from 'styled-icons/fa-solid';
 import { Link as RouterLink } from 'react-router-dom';
 
-import Colors from 'constants/Colors';
+import { Colors } from 'constants/index';
 
 export const Folder = styled(RouterLink)`
   display: inline-flex;

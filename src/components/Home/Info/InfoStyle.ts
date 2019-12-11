@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import Colors from 'constants/Colors';
-import Breakpoints from 'constants/Breakpoints';
+import { Colors, Breakpoints } from 'constants/index';
 
 export const Section = styled.section`
   background: ${Colors.White};
@@ -24,7 +23,7 @@ export const Container = styled.div`
 
 export const Paragraph = styled.p`
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.2;
   color: ${Colors.GrayishBlue};

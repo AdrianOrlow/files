@@ -1,3 +1,5 @@
+import { RouteProps } from 'react-router-dom';
+
 export interface ColorsType {
   White: string;
   Black: string;
@@ -12,8 +14,29 @@ export interface BreakpointsType {
   Desktop: string;
 }
 
+export interface RouteType extends RouteProps {
+  data: RouteDataType;
+  path: string;
+}
+
+export enum RouteTitle {
+  Home,
+  Folder,
+  File,
+  Error404,
+}
+
+export interface RouteDataType {
+  title: RouteTitle;
+}
+
+interface RouteTypes {
+  [index: number]: RouteType;
+}
+
 export interface ConstantsType {
   API_URL: string;
   Colors: ColorsType;
   Breakpoints: BreakpointsType;
+  Routes: RouteTypes;
 }
