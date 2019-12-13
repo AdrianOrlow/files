@@ -33,10 +33,3 @@ export interface RouteDataType {
 interface RouteTypes {
   [index: number]: RouteType;
 }
-
-export interface ConstantsType {
-  API_URL: string;
-  Colors: ColorsType;
-  Breakpoints: BreakpointsType;
-  Routes: RouteTypes;
-}

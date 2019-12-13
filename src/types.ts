@@ -3,7 +3,7 @@ type Model = {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-}
+};
 
 export interface Folder extends Model {
   title: string;
@@ -33,4 +33,11 @@ export interface File extends Model {
   fileChecksumMD5: string;
   fileChecksumSHA1: string;
   folderId: string;
+}
+
+export interface FolderFullInfo {
+  folder: Folder;
+  path: FolderPathElement[];
+  children: Folder[];
+  files: File[];
 }

@@ -1,4 +1,4 @@
-import { API_URL } from 'constants/';
+import { API_URL } from '../constants';
 
 export default {
   v1: {
@@ -18,17 +18,19 @@ export default {
       delete(id: string): string {
         return `${API_URL}v1/folders/${id}`;
       },
-      path(id: string): string {
-        return `${API_URL}v1/folders/${id}/path`;
-      },
       getPublic: `${API_URL}v1/folders`,
       post: `${API_URL}v1/folders`,
+      path: {
+        get(id: string): string {
+          return `${API_URL}v1/folders/${id}/path`;
+        },
+      },
       files: {
         get(id: string): string {
           return `${API_URL}v1/folders/${id}/files`;
         },
       },
-      folders: {
+      children: {
         get(id: string): string {
           return `${API_URL}v1/folders/${id}/folders`;
         },

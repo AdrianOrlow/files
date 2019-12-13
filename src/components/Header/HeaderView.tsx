@@ -4,7 +4,7 @@ import { Header as HeaderElement, Section, Title } from './HeaderStyle';
 const Header: React.FC = () => (
   <HeaderElement>
     <Section>
-      <Title>Files</Title>
+      <Title to="/">Files</Title>
     </Section>
   </HeaderElement>
 );

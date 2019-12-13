@@ -7,11 +7,11 @@ import {
   Folder, Icon, GrayFolderIcon, Title,
 } from './FolderLinkStyle';
 
-interface FolderLinkProps {
+interface Props {
   data: FolderType;
 }
 
-const FolderLink: React.FC<FolderLinkProps> = (props: FolderLinkProps) => {
+const FolderLink: React.FC<Props> = (props: Props) => {
   const { data } = props;
   const folderPath = getPath({ id: data.id }, RouteTitle.Folder);
 

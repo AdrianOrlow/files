@@ -1,5 +1,7 @@
 import React from 'react';
+import * as R from 'ramda';
 
+import { FolderFullInfo, Folder as FolderType, File } from 'types';
 import Loading from 'shared/Loading';
 
 import FolderPath from './FolderPath';
@@ -9,37 +11,76 @@ import {
   Container, Section, SectionTitle, SectionListHorizontal, SectionListVertical,
 } from './FolderStyle';
 
-const Folder: React.FC = () => {
-  const pathData = JSON.parse('[ { "index": 0, "id": "7da0FAvE", "title": "dfsfdsaghhh", "isPublic": true }, { "index": 1, "id": "GdRDh2Ze", "title": "sadasdasd", "isPublic": true }, { "index": 3, "id": "8vJ2Tbvk", "title": "Files", "isPublic": true } ]');
-  const folderData = JSON.parse('{ "id": "7da0FAvE", "createdAt": "2019-12-07T00:00:00Z", "updatedAt": "2019-12-07T00:00:00Z", "deletedAt": null, "title": "dfsfdsaghhh", "permalink": "hhhhhh", "isPublic": true, "parentId": "GdRDh2Ze" }');
-  const fileData = JSON.parse('{ "id": "7dakh7ZE", "createdAt": "2019-12-09T15:56:05Z", "updatedAt": "2019-12-09T15:56:05Z", "deletedAt": null, "title": "Plik", "description": "Opis", "hasPassword": false, "permalink": "", "fileName": "-1575906965", "fileSizeKB": "145", "fileChecksumMd5": "5ec49e36d5084217992442c9d326d16e", "fileChecksumSha1": "1968b0418dec45c2df7edb0f0e683341a604a7c7", "folderId": "8vJ2Tbvk" }');
+interface FolderProps {
+  folderInfo: FolderFullInfo | null;
+}
 
+const Folder: React.FC<FolderProps> = (props: FolderProps) => {
+  const { folderInfo } = props;
 
-  return (
-    <main>
-      <Container>
-        <Section>
-          <FolderPath data={pathData} />
-        </Section>
-        <Section>
-          <SectionTitle>Folders</SectionTitle>
-          <SectionListHorizontal>
-            <FolderLink data={folderData} />
-            <FolderLink data={folderData} />
-            <FolderLink data={folderData} />
-          </SectionListHorizontal>
-        </Section>
-        <Section>
-          <SectionTitle>Files</SectionTitle>
-          <SectionListVertical>
-            <FileLink data={fileData} />
-            <FileLink data={fileData} />
-            <FileLink data={fileData} />
-          </SectionListVertical>
-        </Section>
-      </Container>
-    </main>
-  );
+  if (folderInfo != null) {
+    const { path, children, files } = folderInfo;
+    const moreThanZeroChildren = R.gt(children.length, 0);
+    const moreThanZeroFiles = R.gt(children.length, 0);
+
+    return (
+      <main>
+        <Container>
+          <Section>
+            <FolderPath data={path} />
+          </Section>
+          <Section>
+            <SectionTitle>Folders</SectionTitle>
+            {moreThanZeroChildren && <FolderLinksList data={children} />}
+          </Section>
+          <Section>
+            <SectionTitle>Files</SectionTitle>
+            {moreThanZeroFiles && <FolderFilesLinks data={files} />}
+          </Section>
+        </Container>
+      </main>
+    );
+  }
+  return null;
 };
 
+interface LinksListProps {
+  data: FolderType[];
+}
+
+const FolderLinksList: React.FC<LinksListProps> = (props: LinksListProps) => {
+  const { data } = props;
+
+  const folderLink = (folder: FolderType): React.ReactElement => (
+    <FolderLink key={folder.id} data={folder} />
+  );
+  const foldersLinks = R.map(folderLink, data);
+
+  return <SectionListHorizontal>{foldersLinks}</SectionListHorizontal>;
+};
+
+interface FilesLinksProps {
+  data: File[];
+}
+
+const FolderFilesLinks: React.FC<FilesLinksProps> = (props: FilesLinksProps) => {
+  const { data } = props;
+
+  const fileLink = (file: File): React.ReactElement => (
+    <FileLink key={file.id} data={file} />
+  );
+  const filesLinks = R.map(fileLink, data);
+
+  return <SectionListVertical>{filesLinks}</SectionListVertical>;
+};
+
+const FolderLoading: React.FC = () => (
+  <main>
+    <Container>
+      <Loading />
+    </Container>
+  </main>
+);
+
+export { FolderLoading };
 export default Folder;

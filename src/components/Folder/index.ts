@@ -1,1 +1,1 @@
-export { default } from './FolderView';
+export { default } from './FolderContainer';

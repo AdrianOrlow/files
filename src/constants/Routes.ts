@@ -1,5 +1,6 @@
 import Home from 'components/Home';
 import Folder from 'components/Folder';
+import NotFound from 'components/NotFound';
 
 import { RouteTitle, RouteType } from './types';
 
@@ -21,7 +22,7 @@ const Routes: RouteType[] = [
   },
   {
     path: '*',
-    component: Folder,
+    component: NotFound,
     data: {
       title: RouteTitle.Error404,
     },
