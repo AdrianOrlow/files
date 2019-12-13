@@ -37,6 +37,7 @@ export const ButtonsContainer = styled.nav`
 
 export const Button = styled(SharedButton)`
   padding: 1rem;
+  text-decoration: none;
 `;
 
 export const Divider = styled.div`

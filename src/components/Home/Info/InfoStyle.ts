@@ -6,7 +6,7 @@ export const Section = styled.section`
   padding: 1rem;
   
   @media only screen and (min-width: ${Breakpoints.Mobile}) {
-    padding: 4rem 1rem;
+    padding: 2rem 1rem;
   }
 `;
 
@@ -25,7 +25,7 @@ export const Paragraph = styled.p`
   margin: 0;
   font-size: 1.25rem;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.5;
   color: ${Colors.GrayishBlue};
   
   @media only screen and (min-width: ${Breakpoints.Mobile}) {

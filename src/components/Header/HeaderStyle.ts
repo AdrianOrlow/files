@@ -5,6 +5,10 @@ export const Header = styled.header`
   display: flex;
   background: ${Colors.Fog};
   padding: 1rem;
+  
+  @media only screen and (min-width: ${Breakpoints.Mobile}) {
+    padding: 1rem 1.5rem;
+  }
 `;
 
 export const Section = styled.div`
@@ -19,6 +23,6 @@ export const Title = styled.h1`
   font-size: 1rem;
 
   @media only screen and (min-width: ${Breakpoints.Mobile}) {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 `;

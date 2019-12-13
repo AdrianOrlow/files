@@ -29,8 +29,8 @@ export const SectionTitle = styled.h2`
   margin-bottom: .5rem;
   
   @media only screen and (min-width: ${Breakpoints.Mobile}) {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
   }
 `;
 

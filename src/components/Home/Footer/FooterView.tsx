@@ -15,7 +15,13 @@ const Footer: React.FC = () => (
     <Container>
       <ButtonsContainer>
         <Button>Public files</Button>
-        <Button>GitHub</Button>
+        <Button
+          as="a"
+          href="https://github.com/AdrianOrlow/files"
+          target="_blank"
+        >
+          GitHub
+        </Button>
       </ButtonsContainer>
       <Divider />
       <Copyright>

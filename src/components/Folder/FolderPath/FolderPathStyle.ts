@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { AngleRight } from 'styled-icons/fa-solid';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -16,7 +17,6 @@ export const Container = styled.div`
 `;
 
 export const Navigation = styled.nav`
-  opacity: 0.75;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.5;
@@ -26,17 +26,37 @@ export const Navigation = styled.nav`
   }
 `;
 
+export const PathElement = styled.span`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Link = styled(RouterLink)`
-  color: ${Colors.GrayishBlue};
+  color: ${rgba(Colors.GrayishBlue, 0.75)};
   text-decoration: none;
+  
+  transition: 0.2s ease-in-out;
+  ${PathElement}:not(:last-child) > &:hover {
+    color: ${Colors.GrayishBlue};
+  }
+  
+  ${PathElement}:last-child > & {
+    pointer-events: none;
+  }
 `;
 
 export const Arrow = styled(AngleRight)`
-  color: ${Colors.GrayishBlue};
-  height: 1rem;
-  width: 1.5rem;
+  color: ${rgba(Colors.GrayishBlue, 0.75)};
+  height: 1.25rem;
+  width: 1.75rem;
   
-  span:last-child > &:last-child {
+  span${PathElement}:last-child > &:last-child {
       display: none;
+  }
+  
+  @media only screen and (min-width: ${Breakpoints.Mobile}) {
+     height: 1.75rem;
+     width: 2.5rem;
   }
 `;

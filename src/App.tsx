@@ -22,7 +22,7 @@ const App: React.FC = () => (
 const Switch: React.FC = () => {
   const routerRoute = (route: RouteType): React.ReactElement => (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <RouterRoute {...route} />
+    <RouterRoute key={route.path} {...route} />
   );
   const routes = R.map(routerRoute, Routes);
 
