@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import {
   Section,
@@ -8,18 +7,14 @@ import {
   Title,
 } from './NotFoundStyle';
 
-const NotFound: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
-  const { history } = props;
-
-  return (
-    <Section>
-      <Container>
-        <Title>404.</Title>
-        <Button onClick={history.goBack}>Previous page</Button>
-      </Container>
-    </Section>
-  );
-}
+const NotFound: React.FC = () => (
+  <Section>
+    <Container>
+      <Title>404.</Title>
+      <Button as="a" href="/">Home page</Button>
+    </Container>
+  </Section>
+);
 
 
-export default withRouter(NotFound);
+export default NotFound;

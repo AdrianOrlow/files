@@ -39,4 +39,5 @@ export const Title = styled.h2`
 
 export const Button = styled(SharedButton)`
   padding: 1.5rem;
+  text-decoration: none;
 `;
