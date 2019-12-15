@@ -1,18 +1,18 @@
-import * as mime from 'mime-types';
 import { StyledIcon } from 'styled-icons/types';
 import {
   File,
+  FileAlt,
+  FileArchive,
+  FileAudio,
+  FileCode,
+  FileExcel,
   FileImage,
-  FileWord,
+  FilePdf,
   FilePowerpoint,
   FileVideo,
-  FilePdf,
-  FileExcel,
-  FileAudio,
-  FileArchive,
-  FileAlt,
-  FileCode,
+  FileWord,
 } from 'styled-icons/fa-solid';
+import * as mime from 'mime-types';
 import * as R from 'ramda';
 
 interface IconMimeTypes {
@@ -65,7 +65,7 @@ const iconsMimeTypes: IconMimeTypes[] = [
     icon: FileExcel,
     types: [
       'application/vnd.ms-excel',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ],
   },
   {
@@ -101,7 +101,7 @@ const iconsMimeTypes: IconMimeTypes[] = [
   },
 ];
 
-export const findFileIcon = (fileName: string): StyledIcon => {
+const findFileIcon = (fileName: string): StyledIcon => {
   const mimeType = mime.lookup(fileName);
   const hasMimeType = R.includes(mimeType);
   const foundMimeType = R.find<IconMimeTypes>(
@@ -110,13 +110,4 @@ export const findFileIcon = (fileName: string): StyledIcon => {
   return foundMimeType ? foundMimeType.icon : File;
 };
 
-export const parseDate = (date: string): string => new Date(date).toLocaleDateString();
-
-export const humanFileSize = (sizeKB: string): string => {
-  const fileSize = parseInt(sizeKB, 10);
-  const exp = R.divide(Math.log(fileSize), Math.log(512)) | 0;
-  const value = R.divide(fileSize, 512 ** exp).toFixed(2);
-  const unit = 'KMGTPEZY'[exp] + 'B';
-
-  return `${value} ${unit}`;
-};
+export default findFileIcon;

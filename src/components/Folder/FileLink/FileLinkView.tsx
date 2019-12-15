@@ -1,7 +1,9 @@
 import React from 'react';
 import { File as FileType } from 'types';
 import { RouteTitle } from 'constants/index';
-import { getPath } from 'utils/index';
+import {
+  getPath, parseDate, findFileIcon, humanFileSize,
+} from 'utils/index';
 
 import {
   File, Header, Icon, Info, InfoElement, Title,
