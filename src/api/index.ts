@@ -4,8 +4,12 @@ export default {
   v1: {
     auth: {
       google: {
-        login: `${API_URL}v1/oauth/google/login`,
-        callback: `${API_URL}v1/oauth/google/callback`,
+        login(): string {
+          return `${API_URL}v1/oauth/google/login`;
+        },
+        callback(): string {
+          return `${API_URL}v1/oauth/google/callback`;
+        },
       },
     },
     folders: {
@@ -18,8 +22,12 @@ export default {
       delete(id: string): string {
         return `${API_URL}v1/folders/${id}`;
       },
-      getPublic: `${API_URL}v1/folders`,
-      post: `${API_URL}v1/folders`,
+      getPublic(): string {
+        return `${API_URL}v1/folders/public`;
+      },
+      post(): string {
+        return `${API_URL}v1/folders`;
+      },
       path: {
         get(id: string): string {
           return `${API_URL}v1/folders/${id}/path`;
@@ -46,7 +54,9 @@ export default {
       delete(id: string): string {
         return `${API_URL}v1/files/${id}`;
       },
-      post: `${API_URL}v1/files`,
+      post(): string {
+        return `${API_URL}v1/files`;
+      },
     },
   },
 };
