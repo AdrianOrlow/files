@@ -3,6 +3,7 @@ import { RouteProps } from 'react-router-dom';
 export interface ColorsType {
   White: string;
   Black: string;
+  Red: string;
   Fog: string;
   LightBlue: string;
   Blue: string;

@@ -1,5 +1,6 @@
 import Home from 'components/Home';
 import Folder from 'components/Folder';
+import File from 'components/File';
 import NotFound from 'components/NotFound';
 
 import { RouteTitle, RouteType } from './types';
@@ -18,6 +19,13 @@ const Routes: RouteType[] = [
     component: Folder,
     data: {
       title: RouteTitle.Folder,
+    },
+  },
+  {
+    path: '/file/:id',
+    component: File,
+    data: {
+      title: RouteTitle.File,
     },
   },
   {

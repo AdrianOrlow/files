@@ -30,8 +30,8 @@ export interface File extends Model {
   permalink: string;
   fileName: string;
   fileSizeKB: string;
-  fileChecksumMD5: string;
-  fileChecksumSHA1: string;
+  fileChecksumMd5: string;
+  fileChecksumSha1: string;
   folderId: string;
 }
 

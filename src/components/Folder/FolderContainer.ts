@@ -14,7 +14,7 @@ type FolderProps = RouteComponentProps<FolderRouteParams>;
 
 interface FolderState {
   loading: boolean;
-  folderInfo: FolderFullInfo | null;
+  folderData: FolderFullInfo | null;
 }
 
 class Folder extends React.Component<FolderProps, FolderState> {
@@ -23,7 +23,7 @@ class Folder extends React.Component<FolderProps, FolderState> {
 
     this.state = {
       loading: true,
-      folderInfo: null,
+      folderData: null,
     };
 
     this.getFolderData = this.getFolderData.bind(this);
@@ -34,7 +34,7 @@ class Folder extends React.Component<FolderProps, FolderState> {
   }
 
   componentDidUpdate(prevProps: FolderProps): void {
-    const { folderInfo, loading } = this.state;
+    const { folderData, loading } = this.state;
     const { match } = this.props;
     const matchFolderId = match.params.id;
 
@@ -42,7 +42,7 @@ class Folder extends React.Component<FolderProps, FolderState> {
       return;
     }
 
-    const presentFolder = folderInfo?.folder;
+    const presentFolder = folderData?.folder;
     const matchIsPresentFolder = R.or(
       R.equals(matchFolderId, presentFolder?.id),
       R.equals(matchFolderId, presentFolder?.permalink),
@@ -64,7 +64,7 @@ class Folder extends React.Component<FolderProps, FolderState> {
 
     await getFolderFullInfo(folderId)
       .then((folderInfo: FolderFullInfo) => (
-        this.setState(({ folderInfo }))
+        this.setState(({ folderData: folderInfo }))
       ))
       .catch((error) => {
         console.error(error);
@@ -75,8 +75,8 @@ class Folder extends React.Component<FolderProps, FolderState> {
   }
 
   render = () => {
-    const { loading, folderInfo } = this.state;
-    return R.or(loading, !folderInfo) ? FolderLoading({}) : FolderView({ folderInfo });
+    const { loading, folderData } = this.state;
+    return R.or(loading, R.not(folderData)) ? FolderLoading({}) : FolderView({ folderData });
   };
 }
 

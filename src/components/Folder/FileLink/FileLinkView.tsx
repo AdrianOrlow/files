@@ -15,8 +15,9 @@ interface FileLinkProps {
 
 const FileLink: React.FC<FileLinkProps> = (props: FileLinkProps) => {
   const { data } = props;
-  const FileIcon = findFileIcon(data.fileName);
   const filePath = getPath({ id: data.id }, RouteTitle.File);
+
+  const FileIcon = findFileIcon(data.fileName);
 
   return (
     <File to={filePath}>
@@ -29,29 +30,11 @@ const FileLink: React.FC<FileLinkProps> = (props: FileLinkProps) => {
         </Title>
       </Header>
       <Info>
-        <FileLinkDate date={data.updatedAt} />
-        <FileSize size={data.fileSizeKB} />
+        <InfoElement>{humanFileSize(data.fileSizeKB)}</InfoElement>
+        <InfoElement>{parseDate(data.updatedAt)}</InfoElement>
       </Info>
     </File>
   );
-};
-
-interface FileLinkDateProps {
-  date: string;
-}
-
-const FileLinkDate = (props: FileLinkDateProps): React.ReactElement => {
-  const { date } = props;
-  return <InfoElement>{parseDate(date)}</InfoElement>;
-};
-
-interface FileSizeProps {
-  size: string;
-}
-
-const FileSize = (props: FileSizeProps): React.ReactElement => {
-  const { size } = props;
-  return <InfoElement>{humanFileSize(size)}</InfoElement>;
 };
 
 export default FileLink;

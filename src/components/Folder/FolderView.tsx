@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { FolderFullInfo, Folder as FolderType, File } from 'types';
 import Loading from 'shared/Loading';
 
-import FolderPath from './FolderPath';
+import FolderPath from 'components/FolderPath';
 import FolderLink from './FolderLink';
 import FileLink from './FileLink';
 import {
@@ -12,14 +12,14 @@ import {
 } from './FolderStyle';
 
 interface FolderProps {
-  folderInfo: FolderFullInfo | null;
+  folderData: FolderFullInfo | null;
 }
 
 const Folder: React.FC<FolderProps> = (props: FolderProps) => {
-  const { folderInfo } = props;
+  const { folderData } = props;
 
-  if (folderInfo != null) {
-    const { path, children, files } = folderInfo;
+  if (folderData != null) {
+    const { path, children, files } = folderData;
     const moreThanZeroChildren = R.gt(children.length, 0);
     const moreThanZeroFiles = R.gt(files.length, 0);
 

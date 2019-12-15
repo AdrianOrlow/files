@@ -9,12 +9,14 @@ import {
 } from './NotFoundStyle';
 
 const NotFound: React.FC = () => (
-  <Section>
-    <Container>
-      <Title>404.</Title>
-      <Button as={Link} to="/">Home page</Button>
-    </Container>
-  </Section>
+  <main>
+    <Section>
+      <Container>
+        <Title>404.</Title>
+        <Button as={Link} to="/">Home page</Button>
+      </Container>
+    </Section>
+  </main>
 );
 
 
