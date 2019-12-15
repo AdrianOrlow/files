@@ -1,9 +1,10 @@
 import React from 'react';
+import * as R from 'ramda';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { FolderFullInfo } from 'types';
 
 import FolderView, { FolderLoading } from './FolderView';
-import { getFolderFullInfo } from './FolderApiCalls';
+import { getFolderFullInfo, getPublicFolderId } from './FolderApiCalls';
 
 interface FolderRouteParams {
   id: string;
@@ -35,20 +36,31 @@ class Folder extends React.Component<FolderProps, FolderState> {
   componentDidUpdate(prevProps: FolderProps): void {
     const { folderInfo, loading } = this.state;
     const { match } = this.props;
-    if (prevProps === undefined || loading) {
+    const matchFolderId = match.params.id;
+
+    if (R.or(R.equals(prevProps, undefined), loading)) {
       return;
     }
 
-    if (folderInfo && folderInfo.folder.id !== match.params.id) {
+    const presentFolder = folderInfo?.folder;
+    const matchIsPresentFolder = R.or(
+      R.equals(matchFolderId, presentFolder?.id),
+      R.equals(matchFolderId, presentFolder?.permalink),
+    );
+
+    if (R.not(matchIsPresentFolder)) {
       this.getFolderData();
     }
   }
 
   async getFolderData(): Promise<void> {
-    const { match, history } = this.props;
-    const folderId = match.params.id;
-
     this.setState(({ loading: true }));
+
+    const { match, history } = this.props;
+    const matchFolderId = match.params.id;
+    const publicFolderId: string = await getPublicFolderId();
+    const matchFolderIsPublic = R.equals(matchFolderId, 'public');
+    const folderId = matchFolderIsPublic ? publicFolderId : matchFolderId;
 
     await getFolderFullInfo(folderId)
       .then((folderInfo: FolderFullInfo) => (
@@ -64,7 +76,7 @@ class Folder extends React.Component<FolderProps, FolderState> {
 
   render = () => {
     const { loading, folderInfo } = this.state;
-    return loading || !folderInfo ? FolderLoading({}) : FolderView({ folderInfo });
+    return R.or(loading, !folderInfo) ? FolderLoading({}) : FolderView({ folderInfo });
   };
 }
 

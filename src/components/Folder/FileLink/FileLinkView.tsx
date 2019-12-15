@@ -8,7 +8,6 @@ import {
 import {
   File, Header, Icon, Info, InfoElement, Title,
 } from './FileLinkStyle';
-import { findFileIcon, humanFileSize, parseDate } from './FileLinkUtils';
 
 interface FileLinkProps {
   data: FileType;

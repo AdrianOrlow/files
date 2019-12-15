@@ -1,5 +1,17 @@
 import api from 'api';
-import {File, Folder, FolderFullInfo, FolderPathElement} from 'types';
+import {
+  File, Folder, FolderFullInfo, FolderPathElement,
+} from 'types';
+
+const getPublicFolderInfo = (): Promise<Folder> => fetch(
+  api.v1.folders.getPublic(),
+).then((response) => {
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return response.json() as Promise<Folder>;
+});
 
 const getFolderBasicInfo = (id: string): Promise<Folder> => fetch(
   api.v1.folders.get(id),
@@ -52,8 +64,6 @@ type PromisesResultsType = [
   Folder, FolderPathElement[], Folder[], File[]
 ];
 
-type Unpromise<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
-
 export const getFolderFullInfo = (id: string): Promise<FolderFullInfo> => {
   const promises: PromisesType = [
     getFolderBasicInfo(id),
@@ -74,3 +84,10 @@ export const getFolderFullInfo = (id: string): Promise<FolderFullInfo> => {
       return folderInfo as unknown as Promise<FolderFullInfo>;
     });
 };
+
+export const getPublicFolderId = (): Promise<string> => (
+  getPublicFolderInfo()
+    .then((response: Folder) => (
+      response.id as unknown as Promise<string>
+    ))
+);
