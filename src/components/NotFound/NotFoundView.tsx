@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   Section,
@@ -11,7 +12,7 @@ const NotFound: React.FC = () => (
   <Section>
     <Container>
       <Title>404.</Title>
-      <Button as="a" href="/">Home page</Button>
+      <Button as={Link} to="/">Home page</Button>
     </Container>
   </Section>
 );

@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+import { getPath } from 'utils/index';
+import { RouteTitle } from 'constants/index';
+
 import {
   Footer as FooterStyle,
   Container,
@@ -14,7 +18,12 @@ const Footer: React.FC = () => (
   <FooterStyle>
     <Container>
       <ButtonsContainer>
-        <Button>Public files</Button>
+        <Button
+          as={Link}
+          to={getPath({ id: 'public' }, RouteTitle.Folder)}
+        >
+          Public files
+        </Button>
         <Button
           as="a"
           href="https://github.com/AdrianOrlow/files"
