@@ -21,7 +21,7 @@ const Folder: React.FC<FolderProps> = (props: FolderProps) => {
   if (folderInfo != null) {
     const { path, children, files } = folderInfo;
     const moreThanZeroChildren = R.gt(children.length, 0);
-    const moreThanZeroFiles = R.gt(children.length, 0);
+    const moreThanZeroFiles = R.gt(files.length, 0);
 
     return (
       <main>
