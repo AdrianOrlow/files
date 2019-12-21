@@ -4,6 +4,7 @@ export interface ColorsType {
   White: string;
   Black: string;
   Red: string;
+  Green: string;
   Fog: string;
   LightBlue: string;
   Blue: string;
@@ -22,6 +23,7 @@ export interface RouteType extends RouteProps {
 
 export enum RouteTitle {
   Home,
+  Login,
   Folder,
   File,
   Error404,
@@ -33,4 +35,9 @@ export interface RouteDataType {
 
 interface RouteTypes {
   [index: number]: RouteType;
+}
+
+export interface ApiType {
+  Url: string;
+  LocalStorageTokenName: string;
 }

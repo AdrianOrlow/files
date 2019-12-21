@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 
-import { File as FileType } from 'types';
+import { File as FileType, Link } from 'types';
 import { findFileIcon, humanFileSize, parseDate } from 'utils/index';
 import Loading from 'shared/Loading';
 
@@ -15,19 +15,18 @@ import {
 
 interface FileProps {
   fileData: FileType | null;
-  passwordCorrect: boolean;
-  onDownloadButtonClick: Function;
+  linkData: Link | null;
   onPasswordInput: Function;
 }
 
 const File: React.FC<FileProps> = (props: FileProps) => {
   const {
-    fileData, passwordCorrect, onDownloadButtonClick, onPasswordInput,
+    fileData, linkData, onPasswordInput,
   } = props;
 
   if (fileData != null) {
     const canDownloadFile = R.or(
-      R.and(fileData.hasPassword, passwordCorrect),
+      R.and(fileData.hasPassword, linkData),
       R.not(fileData.hasPassword),
     );
 
@@ -63,7 +62,7 @@ const File: React.FC<FileProps> = (props: FileProps) => {
                 </ChecksumElement>
               </Checksum>
               <Actions>
-                {canDownloadFile && <FileDownload onDownloadButtonClick={onDownloadButtonClick} />}
+                {canDownloadFile && <FileDownload linkData={linkData} fileData={fileData} />}
                 {R.not(canDownloadFile) && <FileInputPassword onPasswordInput={onPasswordInput} />}
               </Actions>
             </Inner>

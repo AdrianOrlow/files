@@ -58,9 +58,8 @@ class Folder extends React.Component<FolderProps, FolderState> {
 
     const { match, history } = this.props;
     const matchFolderId = match.params.id;
-    const publicFolderId: string = await getPublicFolderId();
     const matchFolderIsPublic = R.equals(matchFolderId, 'public');
-    const folderId = matchFolderIsPublic ? publicFolderId : matchFolderId;
+    const folderId = matchFolderIsPublic ? await getPublicFolderId() : matchFolderId;
 
     await getFolderFullInfo(folderId)
       .then((folderInfo: FolderFullInfo) => (
@@ -76,7 +75,9 @@ class Folder extends React.Component<FolderProps, FolderState> {
 
   render = () => {
     const { loading, folderData } = this.state;
-    return R.or(loading, R.not(folderData)) ? FolderLoading({}) : FolderView({ folderData });
+    return R.or(loading, R.not(folderData))
+      ? FolderLoading({})
+      : FolderView({ folderData });
   };
 }
 

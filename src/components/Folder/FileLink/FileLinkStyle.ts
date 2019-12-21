@@ -61,6 +61,7 @@ export const Title = styled.h2`
   align-items: center;
   font-size: 1rem;
   padding: 1rem;
+  padding-left: 0;
   font-weight: 600;
   color: ${Colors.GrayishBlue};
   margin: 0;
@@ -68,6 +69,7 @@ export const Title = styled.h2`
   @media only screen and (min-width: ${Breakpoints.Mobile}) {
     font-size: 1.25rem;
     padding: 1.25rem;
+    padding-left: 0;
   }
 `;
 

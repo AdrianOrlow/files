@@ -41,3 +41,9 @@ export interface FolderFullInfo {
   children: Folder[];
   files: File[];
 }
+
+export interface Link extends Model {
+  key: string;
+  fileId: string;
+  validUntil: string;
+}

@@ -1,4 +1,4 @@
-import api from 'api';
+import api from 'api/config';
 import {
   File, Folder, FolderFullInfo, FolderPathElement,
 } from 'types';

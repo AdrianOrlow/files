@@ -1,4 +1,5 @@
 import Home from 'components/Home';
+import Login from 'components/Login';
 import Folder from 'components/Folder';
 import File from 'components/File';
 import NotFound from 'components/NotFound';
@@ -12,6 +13,14 @@ const Routes: RouteType[] = [
     exact: true,
     data: {
       title: RouteTitle.Home,
+    },
+  },
+  {
+    path: '/login',
+    component: Login,
+    exact: true,
+    data: {
+      title: RouteTitle.Login,
     },
   },
   {

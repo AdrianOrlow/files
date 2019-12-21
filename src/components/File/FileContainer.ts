@@ -2,8 +2,9 @@ import React from 'react';
 import * as R from 'ramda';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { File as FileType } from 'types';
+import { File as FileType, Link as LinkType } from 'types';
 import FileView, { FileLoading } from './FileView';
+import { getFile, createFileLink } from './FileApiCalls';
 
 interface FileRouteParams {
   id: string;
@@ -13,9 +14,8 @@ type FileProps = RouteComponentProps<FileRouteParams>;
 
 interface FileState {
   loading: boolean;
-  password: string;
-  passwordCorrect: boolean;
   fileData: FileType | null;
+  linkData: LinkType | null;
 }
 
 class File extends React.Component<FileProps, FileState> {
@@ -24,34 +24,66 @@ class File extends React.Component<FileProps, FileState> {
 
     this.state = {
       loading: false,
-      password: '',
-      passwordCorrect: false,
+      linkData: null,
       fileData: null,
     };
+
+    this.getFileData = this.getFileData.bind(this);
+    this.onPasswordInput = this.onPasswordInput.bind(this);
+    this.getFileLinkData = this.getFileLinkData.bind(this);
   }
 
   componentDidMount(): void {
-    const fileData = JSON.parse('{ "id": "XN8aSgZ1", "createdAt": "2019-12-15T17:56:56Z", "updatedAt": "2019-12-15T17:56:56Z", "deletedAt": null, "title": "Plik", "description": "Opis", "hasPassword": true, "permalink": "dsffsd", "fileName": "sdsdsdf-1576432616.png", "fileSizeKB": "12", "fileChecksumMd5": "28763df474b75e2e186c61e08b7a0297", "fileChecksumSha1": "30e8063697596cfed32924c8dba7b4ab20d03ec9", "folderId": "GdRDh2Ze" }');
-    this.setState(({ fileData }));
+    this.getFileData();
   }
 
-  onDownloadButtonClick = () => {
-    console.log('ssdfsdf')
+  async getFileData(): Promise<void> {
+    this.setState(({ loading: true }));
+
+    const { match, history } = this.props;
+    const fileId = match.params.id;
+
+    await getFile(fileId)
+      .then((fileData: FileType) => (
+        this.setState(({ fileData }))
+      ))
+      .catch((error) => {
+        console.error(error);
+        history.push('/404');
+      });
+
+    this.setState(({ loading: false }));
   }
 
-  onPasswordInput = (password: string): boolean => {
-    return !(password === 'aaa');
+  onPasswordInput = async (password: string): Promise<boolean> => {
+    const { fileData } = this.state;
+
+    if (fileData) {
+      const linkData = await this.getFileLinkData(fileData.id, password);
+      this.setState(({ linkData }));
+      return linkData != null;
+    }
+    return false;
+  };
+
+  getFileLinkData = async (fileId: string, password: string): Promise<LinkType | null> => {
+    const linkData = await createFileLink(fileId, password)
+      .catch((error) => (
+        console.error(error)
+      ));
+
+    return linkData || null;
   };
 
   render = () => {
-    const { loading, passwordCorrect, fileData } = this.state;
-    return R.or(loading, R.not(fileData))
+    const { loading, linkData, fileData } = this.state;
+
+    return R.or(loading, R.and(R.not(fileData), R.not(linkData)))
       ? FileLoading({})
       : FileView({
-        passwordCorrect,
+        linkData,
         fileData,
         onPasswordInput: this.onPasswordInput,
-        onDownloadButtonClick: this.onDownloadButtonClick,
       });
   };
 }

@@ -16,6 +16,10 @@ export const File = styled.div`
   border-radius: .5em;
   font-size: 1rem;
   overflow: hidden;
+  
+  @media only screen and (min-width: ${Breakpoints.Mobile}) {
+    font-size: 1.25rem;
+  }
 `;
 
 export const Header = styled.header`
@@ -23,6 +27,10 @@ export const Header = styled.header`
   grid-template-columns: 3rem 1fr;
   color: ${Colors.GrayishBlue};
   background: ${Colors.LightBlue};
+  
+  @media only screen and (min-width: ${Breakpoints.Mobile}) {
+    grid-template-columns: 3.75rem 1fr;
+  }
 `;
 
 export const Icon = styled.span`
@@ -52,9 +60,16 @@ export const Icon = styled.span`
 export const Title = styled.h2`
   display: block;
   padding: 1rem;
+  padding-left: 0;
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
+  
+  @media only screen and (min-width: ${Breakpoints.Mobile}) {
+    padding: 1.25rem;
+    padding-left: 0;
+    font-size: 1.25rem;
+  }
 `;
 
 export const Inner = styled.section`
@@ -62,20 +77,38 @@ export const Inner = styled.section`
   grid-gap: 1rem;
   padding: 1rem;
   background: ${Colors.Fog};
+  grid-template-areas:
+      "description"
+      "info"
+      "checksum"
+      "actions";
+  
+  @media only screen and (min-width: ${Breakpoints.Mobile}) {
+    grid-gap: 1.25rem;
+    padding: 1.25rem;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 2rem;
+    grid-template-areas:
+      "description info"
+      "checksum actions";
+  }
 `;
 
 export const Description = styled.p`
+  grid-area: description;
+  line-height: 1.2;
   margin: 0;
   font-weight: 500;
   color: ${rgba(Colors.GrayishBlue, 0.75)}
 `;
 
 export const Info = styled.section`
+  grid-area: info;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   grid-template-areas: "filename filename" "date size";
   grid-gap: 1rem;
+  height: min-content;
 `;
 
 interface InfoElementType {
@@ -96,6 +129,7 @@ export const InfoElement = styled.div<InfoElementType>`
 `;
 
 export const Checksum = styled.section`
+  grid-area: checksum;
   display: grid;
   word-break: break-all;
   grid-gap: 0.5rem;
@@ -118,5 +152,6 @@ export const ChecksumTitle = styled.span`
 `;
 
 export const Actions = styled.section`
-   display: flex;
+  grid-area: actions;
+  display: flex;
 `;

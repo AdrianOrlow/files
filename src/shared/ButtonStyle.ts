@@ -8,4 +8,9 @@ export const Button = styled.button`
   color: ${Colors.Fog};
   justify-content: center;
   border-radius: .5em;
+  transition: 0.2s ease-in-out;
+  
+  &:hover {
+    filter: brightness(97.5%);
+  }
 `;
