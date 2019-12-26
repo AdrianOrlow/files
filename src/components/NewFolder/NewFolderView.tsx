@@ -5,8 +5,8 @@ import * as Yup from 'yup';
 import * as R from 'ramda';
 
 import FolderFinder from 'components/FolderFinder';
-import { RouteTitle} from 'constants/index';
-import { getPath, getUserToken, normalizePermalink} from 'utils/index';
+import { RouteTitle } from 'constants/index';
+import { getPath, getUserToken, normalizePermalink } from 'utils/index';
 
 import {
   Button,

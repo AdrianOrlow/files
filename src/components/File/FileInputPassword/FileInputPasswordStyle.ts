@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ArrowRight, Times } from 'styled-icons/fa-solid';
-import { Colors, Breakpoints } from 'constants/index';
+import { Colors } from 'constants/index';
 import { Spinner } from 'shared/Loading';
 
 export const Container = styled.div`

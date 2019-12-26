@@ -13,7 +13,7 @@ import {
   Description, Info, InfoElement, Checksum, ChecksumElement, ChecksumTitle, Actions,
 } from './FileStyle';
 
-interface FileProps {
+export interface FileProps {
   fileData: FileType | null;
   linkData: Link | null;
   onPasswordInput: Function;

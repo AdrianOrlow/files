@@ -27,7 +27,7 @@ class Login extends React.Component<RouteComponentProps> {
     window.addEventListener('message', this.receiveMessage);
   }
 
-  receiveMessage = (event: any): void => {
+  receiveMessage = (event: MessageEvent): void => {
     const { popup } = this;
     if (event.data.source !== 'api') {
       return;
@@ -64,7 +64,7 @@ class Login extends React.Component<RouteComponentProps> {
     );
   };
 
-  render = () => LoginView({});
+  render = (): React.ReactElement | null => LoginView({});
 }
 
 export default withRouter(Login);

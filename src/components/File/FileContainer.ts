@@ -86,7 +86,7 @@ class File extends React.Component<FileProps, FileState> {
     return linkData || null;
   };
 
-  render = () => {
+  render = (): React.ReactElement | null => {
     const { loading, linkData, fileData } = this.state;
 
     return R.or(loading, R.and(R.not(fileData), R.not(linkData)))

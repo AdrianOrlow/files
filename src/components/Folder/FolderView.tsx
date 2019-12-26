@@ -1,11 +1,11 @@
 import React from 'react';
 import * as R from 'ramda';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import {File, Folder as FolderType, FolderFullInfo} from 'types';
-import {RouteTitle} from 'constants/index';
+import { File, Folder as FolderType, FolderFullInfo } from 'types';
+import { RouteTitle } from 'constants/index';
 import Loading from 'shared/Loading';
-import {getPath, userLoggedIn} from 'utils/index';
+import { getPath, userLoggedIn } from 'utils/index';
 
 import FolderPath from 'components/FolderPath';
 import FolderLink from './FolderLink';

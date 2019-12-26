@@ -23,7 +23,7 @@ export const Container = styled.div`
     grid-template-columns: 1fr 3px auto;
     grid-gap: 2rem;
   }
-`
+`;
 
 export const ButtonsContainer = styled.nav`
   display: grid;

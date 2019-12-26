@@ -85,7 +85,7 @@ class Folder extends React.Component<FolderProps, FolderState> {
     this.setState(({ loading: false }));
   }
 
-  render = () => {
+  render = (): React.ReactElement | null => {
     const { loading, folderData } = this.state;
     return R.or(loading, R.not(folderData))
       ? FolderLoading({})

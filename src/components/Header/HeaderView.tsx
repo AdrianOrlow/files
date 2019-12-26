@@ -26,6 +26,6 @@ const Header: React.FC = () => {
       </Section>
     </HeaderElement>
   );
-}
+};
 
 export default Header;

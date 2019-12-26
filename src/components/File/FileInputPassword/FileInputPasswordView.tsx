@@ -32,7 +32,7 @@ const FileInputPassword: React.FC<FileInputPasswordProps> = (props: FileInputPas
         type="password"
         placeholder={passwordPlaceholder}
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e): void => setPassword(e.target.value)}
       />
       <Button
         disabled={R.or(error, loading)}

@@ -13,7 +13,9 @@ module.exports = {
     }
   },
   rules: {
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-console": "off",
+    "import/prefer-default-export": "off"
   },
   settings: {
     react: {
