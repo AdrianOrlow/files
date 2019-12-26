@@ -11,7 +11,7 @@ My personal file sharing service frontend. Made with React, Styled Components an
 
 ![thumbnail](https://user-images.githubusercontent.com/10941338/71479248-d0b0b800-27f3-11ea-96dd-2c98a82453d2.png)
 
-## Installation
+## Getting started
 
 Get all the dependencies loaded via
 
