@@ -3,6 +3,8 @@ import * as R from 'ramda';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { File as FileType, Link as LinkType } from 'types';
+import { RouteTitle } from 'constants/index';
+import { getPath } from 'utils/index';
 import FileView, { FileLoading } from './FileView';
 import { getFile, createFileLink } from './FileApiCalls';
 
@@ -44,9 +46,18 @@ class File extends React.Component<FileProps, FileState> {
     const fileId = match.params.id;
 
     await getFile(fileId)
-      .then((fileData: FileType) => (
-        this.setState(({ fileData }))
-      ))
+      .then((fileData: FileType) => {
+        this.setState(({ fileData }));
+        const path = getPath({
+          id: fileData.id,
+          permalink: fileData.permalink,
+        }, RouteTitle.File);
+        window.history.replaceState(
+          {},
+          `Files – ${fileData.title}`,
+          path,
+        );
+      })
       .catch((error) => {
         console.error(error);
         history.push('/404');

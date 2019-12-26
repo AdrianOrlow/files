@@ -1,5 +1,7 @@
 import Home from 'components/Home';
 import Login from 'components/Login';
+import NewFile from 'components/NewFile';
+import NewFolder from 'components/NewFolder'
 import Folder from 'components/Folder';
 import File from 'components/File';
 import NotFound from 'components/NotFound';
@@ -24,14 +26,30 @@ const Routes: RouteType[] = [
     },
   },
   {
-    path: '/folder/:id',
+    path: '/newfile/:folderId?',
+    component: NewFile,
+    exact: true,
+    data: {
+      title: RouteTitle.NewFile,
+    },
+  },
+  {
+    path: '/newfolder/:parentId?',
+    component: NewFolder,
+    exact: true,
+    data: {
+      title: RouteTitle.NewFolder,
+    },
+  },
+  {
+    path: '/folder/:id/:permalink?',
     component: Folder,
     data: {
       title: RouteTitle.Folder,
     },
   },
   {
-    path: '/file/:id',
+    path: '/file/:id/:permalink?',
     component: File,
     data: {
       title: RouteTitle.File,

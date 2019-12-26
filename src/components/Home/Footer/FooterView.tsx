@@ -29,7 +29,7 @@ const Footer: React.FC = () => (
           href="https://github.com/AdrianOrlow/files"
           target="_blank"
         >
-          GitHub
+          Source code
         </Button>
       </ButtonsContainer>
       <Divider />

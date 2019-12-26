@@ -2,6 +2,8 @@ import React from 'react';
 import * as R from 'ramda';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { FolderFullInfo } from 'types';
+import { getPath } from 'utils/index';
+import { RouteTitle } from 'constants/index';
 
 import FolderView, { FolderLoading } from './FolderView';
 import { getFolderFullInfo, getPublicFolderId } from './FolderApiCalls';
@@ -62,9 +64,19 @@ class Folder extends React.Component<FolderProps, FolderState> {
     const folderId = matchFolderIsPublic ? await getPublicFolderId() : matchFolderId;
 
     await getFolderFullInfo(folderId)
-      .then((folderInfo: FolderFullInfo) => (
-        this.setState(({ folderData: folderInfo }))
-      ))
+      .then((folderInfo: FolderFullInfo) => {
+        this.setState(({ folderData: folderInfo }));
+        const { folder } = folderInfo;
+        const path = getPath({
+          id: folder.id,
+          permalink: folder.permalink,
+        }, RouteTitle.Folder);
+        window.history.replaceState(
+          {},
+          `Files – ${folder.title}`,
+          path,
+        );
+      })
       .catch((error) => {
         console.error(error);
         history.push('/404');

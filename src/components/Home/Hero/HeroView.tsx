@@ -1,5 +1,7 @@
 import React from 'react';
-import { Section, Container, Title, Button } from './HeroStyle';
+import {
+  Section, Container, Title, Button,
+} from './HeroStyle';
 
 const Hero: React.FC = () => (
   <Section>

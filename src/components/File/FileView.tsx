@@ -31,6 +31,7 @@ const File: React.FC<FileProps> = (props: FileProps) => {
     );
 
     const FileIcon = findFileIcon(fileData.fileName);
+    const sizeBytes = parseInt(fileData.fileSizeKB, 10) * 1000;
 
     return (
       <main>
@@ -48,7 +49,7 @@ const File: React.FC<FileProps> = (props: FileProps) => {
               <Description>{fileData.description}</Description>
               <Info>
                 <InfoElement area="filename">{fileData.fileName}</InfoElement>
-                <InfoElement area="size">{humanFileSize(fileData.fileSizeKB)}</InfoElement>
+                <InfoElement area="size">{humanFileSize(sizeBytes)}</InfoElement>
                 <InfoElement area="date">{parseDate(fileData.updatedAt)}</InfoElement>
               </Info>
               <Checksum>

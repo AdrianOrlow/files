@@ -12,6 +12,7 @@ export interface ColorsType {
 }
 
 export interface BreakpointsType {
+  SmallMobile: string;
   Mobile: string;
   Desktop: string;
 }
@@ -24,6 +25,8 @@ export interface RouteType extends RouteProps {
 export enum RouteTitle {
   Home,
   Login,
+  NewFile,
+  NewFolder,
   Folder,
   File,
   Error404,

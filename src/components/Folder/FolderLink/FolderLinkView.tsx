@@ -13,7 +13,7 @@ interface Props {
 
 const FolderLink: React.FC<Props> = (props: Props) => {
   const { data } = props;
-  const folderPath = getPath({ id: data.id }, RouteTitle.Folder);
+  const folderPath = getPath({ id: data.id, permalink: data.permalink }, RouteTitle.Folder);
 
   return (
     <Folder to={folderPath}>

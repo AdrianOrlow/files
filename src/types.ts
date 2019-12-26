@@ -8,7 +8,6 @@ type Model = {
 export interface Folder extends Model {
   title: string;
   permalink: string;
-  isPublic: boolean;
   parentId: string;
 }
 
@@ -20,7 +19,6 @@ export interface FolderPathElement {
   index: number;
   id: string;
   title: string;
-  isPublic: boolean;
 }
 
 export interface File extends Model {

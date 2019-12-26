@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as R from 'ramda';
 import { Colors } from 'constants/index';
 
@@ -14,9 +14,9 @@ const FileInputPassword: React.FC<FileInputPasswordProps> = (props: FileInputPas
   const { onPasswordInput } = props;
   const passwordPlaceholder = R.join('', R.repeat('●', 6));
 
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(false);
-  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [password, setPassword] = useState('');
 
   const onButtonClick = async (): Promise<void> => {
     setLoading(true);

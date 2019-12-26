@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import { Colors } from 'constants/index';
 
 export const Button = styled.button`
@@ -12,5 +13,9 @@ export const Button = styled.button`
   
   &:hover {
     filter: brightness(97.5%);
+  }
+  
+  &:disabled {
+     background: ${rgba(Colors.Blue, 0.5)};
   }
 `;
