@@ -27,13 +27,26 @@ yarn start
 
 ## Deployment (Dokku)
 
-Build an app to production with
+Create app container
 
 ```
-yarn run build
+dokku apps:create app_name
 ```
 
-Add Dokku remote repository
+Create app container
+
+```
+dokku apps:create app_name
+```
+
+set CRA buildpack for your app container
+
+```
+dokku buildpacks:set app_name https://github.com/mars/create-react-app
+```
+
+
+add Dokku remote repository
 
 ```
 git remote add dokku dokku@server_ip:app_name

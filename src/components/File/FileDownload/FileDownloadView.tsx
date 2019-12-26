@@ -2,7 +2,7 @@ import React from 'react';
 
 import Api from 'api/config';
 import { File as FileType, Link as LinkType } from 'types';
-import { normalizeUri } from 'utils/index';
+import { normalizeUri, toSnakeCase } from 'utils/index';
 
 import {
   Container, DownloadButton, LinkButton, LinkIcon, LinkInfo,
@@ -26,7 +26,7 @@ const FileDownload: React.FC<FileDownloadProps> = (props: FileDownloadProps) => 
   if (fileData) {
     const linkWithKey = Api.v1.files.download.withKey;
     const linkWithoutKey = Api.v1.files.download.withoutKey;
-    const normalizedFileName = normalizeUri(fileData.fileName);
+    const normalizedFileName = toSnakeCase(normalizeUri(fileData.fileName));
     const fileLink = fileData.hasPassword && linkData != null
       ? linkWithKey(fileData.id, linkData.key, normalizedFileName)
       : linkWithoutKey(fileData.id, normalizedFileName);

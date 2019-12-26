@@ -60,7 +60,7 @@ export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<
       const permalink = normalizePermalink(fileNameWithoutExt);
 
       setFieldValue('file', file);
-      setFieldValue('fileName', fileNameSnakeCase);
+      setFieldValue('fileName', file.name);
       setFieldValue('permalink', permalink);
     }
   };
