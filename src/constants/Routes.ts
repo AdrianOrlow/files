@@ -2,6 +2,8 @@ import Home from 'components/Home';
 import Login from 'components/Login';
 import NewFile from 'components/NewFile';
 import NewFolder from 'components/NewFolder';
+import EditFile from 'components/EditFile';
+import EditFolder from 'components/EditFolder';
 import Folder from 'components/Folder';
 import File from 'components/File';
 import NotFound from 'components/NotFound';
@@ -39,6 +41,22 @@ const Routes: RouteType[] = [
     exact: true,
     data: {
       title: RouteTitle.NewFolder,
+    },
+  },
+  {
+    path: '/editfile/:id',
+    component: EditFile,
+    exact: true,
+    data: {
+      title: RouteTitle.EditFile,
+    },
+  },
+  {
+    path: '/editfolder/:id',
+    component: EditFolder,
+    exact: true,
+    data: {
+      title: RouteTitle.EditFolder,
     },
   },
   {

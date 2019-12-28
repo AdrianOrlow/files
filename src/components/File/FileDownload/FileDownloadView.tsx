@@ -35,7 +35,7 @@ const FileDownload: React.FC<FileDownloadProps> = (props: FileDownloadProps) => 
       <Container>
         <LinkButton
           copied={copied}
-          onClick={(): void => copyLinkToClipBoard(fileLink)}
+          onClick={(): void => copyLinkToClipBoard(`${fileLink}?preview`)}
         >
           <LinkIcon />
           <LinkInfo>COPY TO CLIPBOARD</LinkInfo>

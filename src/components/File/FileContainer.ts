@@ -1,12 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { File as FileType, Link as LinkType } from 'types';
 import { RouteTitle } from 'constants/index';
-import { getPath } from 'utils/index';
+import { getPath, getUserToken } from 'utils/index';
+
 import FileView, { FileLoading } from './FileView';
-import { getFile, createFileLink } from './FileApiCalls';
+import { createFileLink, getFile, deleteFile } from './FileApiCalls';
 
 interface FileRouteParams {
   id: string;
@@ -16,6 +17,7 @@ type FileProps = RouteComponentProps<FileRouteParams>;
 
 interface FileState {
   loading: boolean;
+  deleteConfirmed: boolean;
   fileData: FileType | null;
   linkData: LinkType | null;
 }
@@ -26,6 +28,7 @@ class File extends React.Component<FileProps, FileState> {
 
     this.state = {
       loading: false,
+      deleteConfirmed: false,
       linkData: null,
       fileData: null,
     };
@@ -33,6 +36,7 @@ class File extends React.Component<FileProps, FileState> {
     this.getFileData = this.getFileData.bind(this);
     this.onPasswordInput = this.onPasswordInput.bind(this);
     this.getFileLinkData = this.getFileLinkData.bind(this);
+    this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
   }
 
   componentDidMount(): void {
@@ -86,15 +90,38 @@ class File extends React.Component<FileProps, FileState> {
     return linkData || null;
   };
 
+  onDeleteButtonClick = async (): Promise<void> => {
+    const { fileData, deleteConfirmed } = this.state;
+    const { history } = this.props;
+
+    if (deleteConfirmed) {
+      const token = getUserToken();
+
+      if (token && fileData) {
+        this.setState(({ loading: true }));
+        await deleteFile(fileData.id, token);
+        const folderPath = getPath({ id: fileData.folderId }, RouteTitle.Folder);
+        history.push(folderPath);
+      }
+    } else {
+      this.setState(({ deleteConfirmed: true }));
+      setTimeout(() => (this.setState(({ deleteConfirmed: false }))), 1000);
+    }
+  };
+
   render = (): React.ReactElement | null => {
-    const { loading, linkData, fileData } = this.state;
+    const {
+      loading, linkData, fileData, deleteConfirmed,
+    } = this.state;
 
     return R.or(loading, R.and(R.not(fileData), R.not(linkData)))
       ? FileLoading({})
       : FileView({
         linkData,
         fileData,
+        deleteConfirmed,
         onPasswordInput: this.onPasswordInput,
+        onDeleteButtonClick: this.onDeleteButtonClick,
       });
   };
 }

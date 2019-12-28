@@ -26,3 +26,18 @@ export const createFileLink = (id: string, password: string): Promise<Link> => f
 
   return response.json() as Promise<Link>;
 });
+
+
+export const deleteFile = (id: string, token: string): Promise<void> => fetch(
+  api.v1.files.delete(id),
+  {
+    headers: {
+      Authorization: token,
+    },
+    method: 'DELETE',
+  },
+).then((response) => {
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+});

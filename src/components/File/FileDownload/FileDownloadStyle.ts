@@ -1,13 +1,16 @@
 import styled from 'styled-components';
-import { Colors } from 'constants/index';
+import { Colors, Breakpoints } from 'constants/index';
 import { Button as SharedButton } from 'shared/ButtonStyle';
 import { Link } from 'styled-icons/fa-solid';
 
 export const Container = styled.div`
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 1fr 1fr;
   width: 100%;
+  
+  @media only screen and (min-width: ${Breakpoints.VerySmallMobile}) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 interface LinkButtonProps {

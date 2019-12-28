@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { File } from 'types';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { FormikProps, withFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,11 +8,15 @@ import * as R from 'ramda';
 import FolderFinder from 'components/FolderFinder';
 import { RouteTitle } from 'constants/index';
 import { getPath, getUserToken, normalizePermalink } from 'utils/index';
+import Loading from 'shared/Loading';
 
 import {
   Button,
   Container,
   DescriptionWrapper,
+  FileInfoWrapper,
+  FileContainer,
+  FileDescription,
   Error,
   FolderFinderWrapper,
   Form,
@@ -24,22 +29,17 @@ import {
   Title,
   TitleWrapper,
   LoadingSpinner,
-} from './NewFileStyle';
-import { fileNameWithoutExtension, normalizeFileName } from './NewFileUtils';
-import { createFile } from './NewFileApiCalls';
-import { FormValues } from './NewFileTypes';
+} from './EditFileStyle';
+import { updateFile, getFile } from './EditFileApiCalls';
+import { FormValues } from './EditFileTypes';
 
-import FileInput from './FileInput';
-
-const initialValues: FormValues = {
-  title: '',
-  description: '',
-  file: null,
-  password: '',
-  permalink: '',
-  fileName: '',
-  folderId: '',
-};
+const LoadingView: React.FC = () => (
+  <main>
+    <Container>
+      <Loading />
+    </Container>
+  </main>
+);
 
 export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<FormValues>) => {
   const {
@@ -52,22 +52,7 @@ export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<
     setFieldValue,
   } = props;
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.files) {
-      const file = event.target.files[0];
-      const fileNameSnakeCase = normalizeFileName(file.name);
-      const fileNameWithoutExt = fileNameWithoutExtension(fileNameSnakeCase);
-      const permalink = normalizePermalink(fileNameWithoutExt);
-
-      setFieldValue('file', file);
-      setFieldValue('fileName', file.name);
-      setFieldValue('permalink', permalink);
-    }
-  };
-
-  const handleFileCancel = (): void => (
-    setFieldValue('file', null)
-  );
+  const { initialValues } = props;
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const title = event.target.value;
@@ -87,7 +72,7 @@ export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<
       <Container>
         <Form onSubmit={handleSubmit}>
           <Header>
-            <Title>Upload a file</Title>
+            <Title>Edit a file</Title>
           </Header>
           <Inner>
             <TitleWrapper>
@@ -114,12 +99,11 @@ export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<
               />
               {errors.description && (<Error>{errors.description}</Error>)}
             </DescriptionWrapper>
-            <FileInput
-              errors={errors.file}
-              file={values.file}
-              onUpload={handleFileUpload}
-              onCancel={handleFileCancel}
-            />
+            <FileInfoWrapper>
+              <FileContainer>
+                <FileDescription />
+              </FileContainer>
+            </FileInfoWrapper>
             <FolderFinderWrapper>
               <FolderFinder
                 name="folderId"
@@ -162,7 +146,7 @@ export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<
                 || R.equals(values, initialValues)
               }
             >
-              {R.not(isSubmitting) && 'UPLOAD'}
+              {R.not(isSubmitting) && 'UPDATE'}
               {isSubmitting && <LoadingSpinner />}
             </Button>
           </Inner>
@@ -173,32 +157,23 @@ export const InnerForm: React.FC<FormikProps<FormValues>> = (props: FormikProps<
 };
 
 interface FormProps {
-  folderId?: string;
+  initialValues: FormValues;
+  fileData: File;
   token: string | null;
 }
 
-type NewFileProps = FormProps & RouteComponentProps;
+type EditFileProps = FormProps & RouteComponentProps;
 
-const NewFile = withFormik<NewFileProps, FormValues>({
-  mapPropsToValues: (props: NewFileProps) => ({
-    ...initialValues,
-    folderId: props.folderId || initialValues.folderId,
+const EditFile = withFormik<EditFileProps, FormValues>({
+  mapPropsToValues: (props: EditFileProps) => ({
+    ...props.initialValues
   }),
 
   validationSchema: Yup.object().shape({
     title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
-    file: Yup
-      .mixed()
-      .required('File is required')
-      .test(
-        'fileSize',
-        'File is too large (> 128 MB)',
-        (value: File) => value && value.size <= 128 * 1024 * 1024,
-      ),
     password: Yup.string(),
     permalink: Yup.string().required('Permalink is required'),
-    fileName: Yup.string().required('Filename is required'),
     folderId: Yup.string().required('Folder ID is required'),
   }),
 
@@ -206,41 +181,75 @@ const NewFile = withFormik<NewFileProps, FormValues>({
     data: FormValues,
     { props, setSubmitting, setErrors },
   ) {
-    const { history, token } = props;
+    const { history, token, fileData } = props;
 
     if (token) {
       setSubmitting(true);
-      const file = await createFile(data, token)
+      const file = await updateFile(fileData.id, data, token)
         .catch((error) => (
           setErrors(error)
         ));
       setSubmitting(false);
 
       if (file) {
-        history.push(getPath({ id: file.id }, RouteTitle.File));
+        const filePath = getPath({ id: file.id, permalink: file.permalink }, RouteTitle.File);
+        history.push(filePath);
       }
     }
   },
 })(InnerForm);
 
-interface NewFileRouteParams {
-  folderId?: string;
+interface EditFileRouteParams {
+  id: string;
 }
 
-type NewFileWrapperProps = RouteComponentProps<NewFileRouteParams>;
+type EditFileWrapperProps = RouteComponentProps<EditFileRouteParams>;
 
-const NewFileWrapper: React.FC<NewFileWrapperProps> = (props: NewFileWrapperProps) => {
+const EditFileWrapper: React.FC<EditFileWrapperProps> = (props: EditFileWrapperProps) => {
   const { history, match } = props;
-  const { folderId } = match.params;
+  const { id } = match.params;
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [initialValues, setInitialValues] = useState<FormValues | null>(null);
+  const [fileData, setFileData] = useState<File | null>(null);
+
   const token = getUserToken();
   const tokenNotExists = R.or(R.isEmpty(token), R.isNil(token));
+  const initialValuesNotExists = R.and(R.isNil(initialValues), R.not(loading));
 
-  if (tokenNotExists) {
-    history.push(getPath({}, RouteTitle.Login));
-  }
+  const init = (): Promise<void> => (
+    getFile(id)
+      .then((file: File): void => {
+        setInitialValues({
+          title: file.title,
+          description: file.description,
+          permalink: file.permalink,
+          folderId: file.folderId,
+          password: undefined,
+        });
+        setFileData(file);
+      })
+      .catch((error) => {
+        console.error(error);
+        history.push(getPath({}, RouteTitle.Error404));
+      })
+      .finally(() => {
+        setLoading(false);
 
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <NewFile folderId={folderId} token={token} {...props} />;
+        if (R.or(tokenNotExists, initialValuesNotExists)) {
+          history.push(getPath({}, RouteTitle.Login));
+        }
+      })
+  );
+  useEffect(() => {
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return loading || initialValuesNotExists || initialValues == null || fileData == null
+    ? <LoadingView />
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    : <EditFile initialValues={initialValues} fileData={fileData} token={token} {...props} />;
 };
 
-export default withRouter(NewFileWrapper);
+export default withRouter(EditFileWrapper);

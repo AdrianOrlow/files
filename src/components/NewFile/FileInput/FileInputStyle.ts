@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { rgba } from 'polished';
 import { Colors, Breakpoints } from 'constants/index';
-import { Times } from 'styled-icons/fa-solid';
-import { Button as SharedButton } from 'shared/ButtonStyle';
+import * as SharedForm from 'shared/FormStyle';
 
 export const UploadLabel = styled.label`
   display: flex;
@@ -36,72 +34,16 @@ export const UploadInput = styled.input`
   width: 1px; 
 `;
 
-export const FileContainer = styled.div`
-  border-radius: .5em;
-  font-size: 1rem;
-  background: ${Colors.Blue};
-  display: grid;
-  grid-template-columns: 1fr 4rem;
-  
-  @media only screen and (min-width: ${Breakpoints.SmallMobile}) {
-    font-size: 1.25rem;
-    height: 100%;
-  }
-`;
+export const { FileContainer } = SharedForm;
 
-export const FileDescription = styled.div`
-  display: grid;
-  grid-template-columns: fit-content(66%) 1px auto;
-  grid-gap: 1rem;
-  color: ${Colors.Fog};
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 1rem;
-  
-  @media only screen and (min-width: ${Breakpoints.SmallMobile}) {
-    font-size: 1.25rem;
-    padding: 1.25rem;
-  }
-`;
+export const { FileDescription } = SharedForm;
 
-const fileInfoText = `
-  margin: 0;
-  display: flex;
-  align-items: center;
-`;
+export const { FileInfoName } = SharedForm;
 
-export const FileInfoName = styled.p`
-  ${fileInfoText};
-  word-break: break-all;
-`;
+export const { FileInfoSize } = SharedForm;
 
-export const FileInfoSize = styled.p`
-  ${fileInfoText};
-  white-space: nowrap;
-`;
+export const { FileInfoDivider } = SharedForm;
 
-export const FileInfoDivider = styled.div`
-  height: 100%;
-  width: 2px;
-  border-radius: 1px;
-  background: ${rgba(Colors.Fog, 0.5)};
-  
-  @media only screen and (min-width: ${Breakpoints.SmallMobile}) {
-    height: 2rem;
-    margin: auto;
-  }
-`;
+export const { FileCancel } = SharedForm;
 
-export const FileCancel = styled(SharedButton)`
-  padding: 1rem;
-  
-  @media only screen and (min-width: ${Breakpoints.SmallMobile}) {
-    padding: 1.25rem;
-  }
-`;
-
-export const FileCancelIcon = styled(Times)`
-  width: 1.5rem;
-  height: 1.5rem;
-  color: ${Colors.Fog};
-`;
+export const { FileCancelIcon } = SharedForm;

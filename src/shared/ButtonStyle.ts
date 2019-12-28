@@ -8,6 +8,7 @@ export const Button = styled.button`
   background: ${Colors.Blue};
   color: ${Colors.Fog};
   justify-content: center;
+  align-items: center;
   border-radius: .5em;
   transition: 0.2s ease-in-out;
   

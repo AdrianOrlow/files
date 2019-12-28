@@ -1,27 +1,49 @@
 import React from 'react';
 import * as R from 'ramda';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { File as FileType, Link } from 'types';
-import { findFileIcon, humanFileSize, parseDate } from 'utils/index';
+import {
+  findFileIcon, humanFileSize, parseDate, getPath, userLoggedIn,
+} from 'utils/index';
+import { RouteTitle } from 'constants/index';
 import Loading from 'shared/Loading';
 
 import FileDownload from './FileDownload';
 import FileInputPassword from './FileInputPassword';
 
 import {
-  Container, File as FileStyle, Header, Icon, Title, Inner,
-  Description, Info, InfoElement, Checksum, ChecksumElement, ChecksumTitle, Actions,
+  Container,
+  File as FileStyle,
+  Header,
+  Icon,
+  Title,
+  Inner,
+  Description,
+  Info,
+  InfoElement,
+  Checksum,
+  ChecksumElement,
+  ChecksumTitle,
+  Actions,
+  HeaderActions,
+  DeleteButton,
+  DeleteIcon,
+  EditButton,
+  EditIcon,
 } from './FileStyle';
 
 export interface FileProps {
   fileData: FileType | null;
   linkData: Link | null;
+  deleteConfirmed: boolean;
+  onDeleteButtonClick: Function;
   onPasswordInput: Function;
 }
 
 const File: React.FC<FileProps> = (props: FileProps) => {
   const {
-    fileData, linkData, onPasswordInput,
+    fileData, linkData, onPasswordInput, deleteConfirmed, onDeleteButtonClick,
   } = props;
 
   if (fileData != null) {
@@ -29,6 +51,7 @@ const File: React.FC<FileProps> = (props: FileProps) => {
       R.and(fileData.hasPassword, linkData),
       R.not(fileData.hasPassword),
     );
+    const editLinkPath = getPath({ id: fileData.id }, RouteTitle.EditFile);
 
     const FileIcon = findFileIcon(fileData.fileName);
     const sizeBytes = parseInt(fileData.fileSizeKB, 10) * 1000;
@@ -44,6 +67,22 @@ const File: React.FC<FileProps> = (props: FileProps) => {
               <Title>
                 {fileData.title}
               </Title>
+              {userLoggedIn && (
+                <HeaderActions>
+                  <EditButton
+                    as={RouterLink}
+                    to={editLinkPath}
+                  >
+                    <EditIcon />
+                  </EditButton>
+                  <DeleteButton
+                    confirmed={deleteConfirmed}
+                    onClick={(): void => onDeleteButtonClick()}
+                  >
+                    <DeleteIcon />
+                  </DeleteButton>
+                </HeaderActions>
+              )}
             </Header>
             <Inner>
               <Description>{fileData.description}</Description>

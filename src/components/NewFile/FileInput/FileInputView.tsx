@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { humanFileSize } from 'utils/index';
 
 import {
@@ -36,9 +37,10 @@ interface UploadProps {
 
 const Upload: React.FC<UploadProps> = (props: UploadProps) => {
   const { onUpload, file } = props;
+  const fileExists = R.and(R.not(R.isEmpty(file)), R.not(R.isNil(file)));
 
   return (
-    <UploadLabel hidden={!!file}>
+    <UploadLabel hidden={fileExists}>
       CLICK TO UPLOAD
       <UploadInput
         type="file"

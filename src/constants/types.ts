@@ -12,6 +12,7 @@ export interface ColorsType {
 }
 
 export interface BreakpointsType {
+  VerySmallMobile: string;
   SmallMobile: string;
   Mobile: string;
   Desktop: string;
@@ -27,6 +28,8 @@ export enum RouteTitle {
   Login,
   NewFile,
   NewFolder,
+  EditFile,
+  EditFolder,
   Folder,
   File,
   Error404,
