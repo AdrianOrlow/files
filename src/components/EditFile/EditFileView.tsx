@@ -166,7 +166,7 @@ type EditFileProps = FormProps & RouteComponentProps;
 
 const EditFile = withFormik<EditFileProps, FormValues>({
   mapPropsToValues: (props: EditFileProps) => ({
-    ...props.initialValues
+    ...props.initialValues,
   }),
 
   validationSchema: Yup.object().shape({

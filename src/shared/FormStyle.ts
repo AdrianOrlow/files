@@ -4,7 +4,7 @@ import { Colors, Breakpoints } from 'constants/index';
 import { Form as FormikForm } from 'formik';
 import { Button as SharedButton } from 'shared/ButtonStyle';
 import { Spinner } from 'shared/Loading';
-import {Times} from "@styled-icons/fa-solid";
+import { Times } from 'styled-icons/fa-solid';
 
 export const Container = styled.div`
   max-width: ${Breakpoints.Desktop};
