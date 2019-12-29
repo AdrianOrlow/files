@@ -5,7 +5,7 @@
 
 # Files
 
-My personal file sharing service frontend. Made with React, Styled Components and a little bit of Ramda.
+My personal file sharing service frontend. Made with React, Styled Components, Formik and a little bit of Ramda.
 
 [Files API](https://github.com/AdrianOrlow/files-api)
 
